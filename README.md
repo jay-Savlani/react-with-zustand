@@ -1,3 +1,3 @@
-# Pokemon Search Application which uses Zustand as state management library
+Please see with_zustand branch. Readme file is update in that branch. 
 
 
