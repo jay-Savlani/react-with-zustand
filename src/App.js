@@ -1,42 +1,26 @@
-import React, {useState,useEffect} from "react";
+import React from "react";
+import create from "zustand";
+import SearchPokemon from "./SearchPokemon";
+import MainContainer from "./MainContainer";
+import Pokemon from "./Pokemon";
+import Info from "./Info";
 import "./app.css";
 
+export const useStore = create((set) => ({
+  pokemon: [],
+  filter: "",
+  setPokemon: (pokemon) => set({ pokemon }),
+  setFilter: (filter) => set({ filter }),
+}));
+
 function App() {
-
-  const [filter, setFilter] = useState("");
-  const [pokemon, setPokemon] = useState([]);
-
-  useEffect(() => {
-    fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json")
-    .then(resp => resp.json())
-    .then(data => setPokemon(data));
-  }, []);
-
-
   return (
-    <div className="main">
-  
-    <input
-      className="search"
-      type="text"
-      placeholder="Search Pokemon"
-      value={filter}
-      onChange={(e) => setFilter(e.target.value)}
-    />
-    
-      <div className="container">
-        {pokemon?.filter(p => p.name.toLowerCase().includes(filter)).slice(0, 20).map((p) => {
-          return (
-            <div key={p.id} className="image">
-              <img
-                alt={p.name}
-                src={`https://jherr-pokemon.s3.us-west-1.amazonaws.com/${p.image}`}
-              />
-              <h2 className="name" >{p.name}</h2>
-            </div>
-          );
-        })}
-      </div>
+    <div className="app-container">
+      <SearchPokemon />
+      <MainContainer>
+        <Info />
+        <Pokemon />
+      </MainContainer>
     </div>
   );
 }
